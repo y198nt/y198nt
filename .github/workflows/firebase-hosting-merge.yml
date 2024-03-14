@@ -10,6 +10,8 @@ jobs:
   build_and_deploy:
     runs-on: ubuntu-latest
     steps:
+      - name: Install npm
+        run: npm install -g firebase-tools
       - name: Hugo setup
         uses: peaceiris/actions-hugo@v2.6.0
         with: 
@@ -25,6 +27,7 @@ jobs:
           fetch-depth: 0    # Fetch all history for .GitInfo and .Lastmod
 
       - name: Build with Hugo
+        
         env:
           # For maximum backward compatibility with Hugo modules
           HUGO_ENVIRONMENT: production
