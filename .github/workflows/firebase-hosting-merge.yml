@@ -10,33 +10,39 @@ jobs:
   build_and_deploy:
     runs-on: ubuntu-latest
     steps:
-      - name: Install npm
-        run: npm install -g firebase-tools
       - name: Hugo setup
-        uses: peaceiris/actions-hugo@v2.6.0
-        with: 
-          hugo-version: latest
-          extended: true
-        env:
-          ACTIONS_ALLOW_UNSECURE_COMMANDS: 'true'
-
+          uses: peaceiris/actions-hugo@v2.6.0
+          with: 
+            hugo-version: 0.115.4
+            extended: true
+          env:
+            ACTIONS_ALLOW_UNSECURE_COMMANDS: 'true'
       - name: Check out code into the Go module directory
+<<<<<<< HEAD
         uses: actions/checkout@v4
         with:
           submodules: true  # Fetch Hugo themes (true OR recursive)
           fetch-depth: 0    # Fetch all history for .GitInfo and .Lastmod
+=======
+          uses: actions/checkout@v4
+          with:
+            submodules: true  # Fetch Hugo themes (true OR recursive)
+            fetch-depth: 0    # Fetch all history for .GitInfo and .Lastmod
+>>>>>>> 10f2468 (add github actions workflows)
       - name: Build with Hugo
-        
-        env:
-          # For maximum backward compatibility with Hugo modules
-          HUGO_ENVIRONMENT: production
-          HUGO_ENV: production
-        run: hugo -E -F --minify -d ../public
-
-      - name: Deploy Production
+          env:
+            # For maximum backward compatibility with Hugo modules
+            HUGO_ENVIRONMENT: production
+            HUGO_ENV: production
+          run: hugo -E -F --minify -d public
+       - name: Deploy Production
         uses: FirebaseExtended/action-hosting-deploy@v0
         with:
           repoToken: '${{ secrets.GITHUB_TOKEN }}'
+<<<<<<< HEAD
           firebaseServiceAccount: 'firebase-adminsdk-m2qar@blowfish-a2cdc.iam.gserviceaccount.com'
+=======
+          firebaseServiceAccount: '${{ secrets.FIREBASE_SERVICE_ACCOUNT_BLOWFISH_TUTORIAL }}'
+>>>>>>> 10f2468 (add github actions workflows)
           channelId: live
           projectId: blowfish-a2cdc
