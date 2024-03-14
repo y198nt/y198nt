@@ -15,8 +15,6 @@ jobs:
     if: ${{ github.event.pull_request.head.repo.full_name == github.repository }}
     runs-on: ubuntu-latest
     steps:
-      - name: firebase login
-        run: firebase login:ci
       - name: Hugo setup
         uses: peaceiris/actions-hugo@v2.6.0
         with:
@@ -30,7 +28,8 @@ jobs:
         with:
           submodules: true  # Fetch Hugo themes (true OR recursive)
           fetch-depth: 0    # Fetch all history for .GitInfo and .Lastmod
-
+      - name: firebase login
+        run: firebase login:ci
       - name: Build with Hugo
         env:
           # For maximum backward compatibility with Hugo modules
