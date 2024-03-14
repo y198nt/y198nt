@@ -2,19 +2,17 @@
 # https://github.com/firebase/firebase-tools
 
 name: Deploy to Firebase Hosting on merge
-
-on:
+'on':
   push:
     branches:
       - main
-
 jobs:
   build_and_deploy:
     runs-on: ubuntu-latest
     steps:
       - name: Hugo setup
         uses: peaceiris/actions-hugo@v2.6.0
-        with:
+        with: 
           hugo-version: latest
           extended: true
         env:
@@ -31,12 +29,12 @@ jobs:
           # For maximum backward compatibility with Hugo modules
           HUGO_ENVIRONMENT: production
           HUGO_ENV: production
-        run: hugo -E -F --minify --themesDir themes/ -d public --baseURL https://y198nt.github.io/y198nt
+        run: hugo -E -F --minify -d public
 
       - name: Deploy Production
         uses: FirebaseExtended/action-hosting-deploy@v0
         with:
-          repoToken: ${{ secrets.GITHUB_TOKEN }}
-          firebaseServiceAccount: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_BLOWFISH_A2CDC }}
+          repoToken: '${{ secrets.GITHUB_TOKEN }}'
+          firebaseServiceAccount: '${{ secrets.FIREBASE_SERVICE_ACCOUNT_BLOWFISH_A2CDC }}'
           channelId: live
           projectId: blowfish-a2cdc
