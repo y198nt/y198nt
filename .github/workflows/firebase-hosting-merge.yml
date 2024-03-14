@@ -15,7 +15,7 @@ jobs:
       - name: Hugo setup
         uses: peaceiris/actions-hugo@v2.6.0
         with:
-          hugo-version: 0.115.4
+          hugo-version: latest
           extended: true
         env:
           ACTIONS_ALLOW_UNSECURE_COMMANDS: 'true'
@@ -34,6 +34,7 @@ jobs:
         run: hugo -E -F --minify -d ../public
 
       - name: Deploy Production
+        run: firebase login:ci
         uses: FirebaseExtended/action-hosting-deploy@v0
         with:
           repoToken: '${{ secrets.GITHUB_TOKEN }}'
