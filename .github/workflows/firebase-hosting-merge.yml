@@ -39,4 +39,4 @@ jobs:
           repoToken: ${{ secrets.GITHUB_TOKEN }}
           firebaseServiceAccount: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_BLOWFISH_A2CDC }}
           channelId: live
-          projectId: blowfish-a2cbc
+          projectId: blowfish-a2cdc
