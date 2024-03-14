@@ -28,7 +28,9 @@ jobs:
         with:
           submodules: true  # Fetch Hugo themes (true OR recursive)
           fetch-depth: 0    # Fetch all history for .GitInfo and .Lastmod
-
+      - name: Deploy To Firebase
+        run: |
+          $(npm bin)/firebase-ci deploy
       
 
       - name: Build with Hugo
@@ -37,8 +39,6 @@ jobs:
           HUGO_ENVIRONMENT: production
           HUGO_ENV: production
         run: hugo -E -F --minify -d public
-      - name: Firebase login
-        run: echo "${{ secrets.FIREBASE_CI_TOKEN }}" | firebase login:ci
       - name: Deploy preview
         uses: FirebaseExtended/action-hosting-deploy@v0
         with:
