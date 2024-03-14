@@ -33,7 +33,7 @@ jobs:
         uses: FirebaseExtended/action-hosting-deploy@v0
         with:
           repoToken: '${{ secrets.GITHUB_TOKEN }}'
-          firebaseServiceAccount: 'blowfish-a2cdc@appspot.gserviceaccount.com'
+          firebaseServiceAccount: 'firebase-adminsdk-m2qar@blowfish-a2cdc.iam.gserviceaccount.com'
           expires: 30d
           channelId: preview-${{ github.event.number }}
           projectId: blowfish-a2cdc
