@@ -15,7 +15,7 @@ title = "y198"
 
  [author]
    name = "y198"
-   image = "img/profile.png"
+   image = "profile.png"
    headline = "living a life you will remember"
    bio = "living in fuzzing"
    links = [
