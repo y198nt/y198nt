@@ -1,1 +1,3 @@
-
+script:
+  # Deploy to Firebase project matching branch name in projects parameter of .firebaserc
+  - $(npm bin)/firebase-ci deploy
