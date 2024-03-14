@@ -2,40 +2,45 @@
 # https://github.com/firebase/firebase-tools
 
 name: Deploy to Firebase Hosting on PR
-'on': pull_request
-permissions:
-  checks: write
-  contents: read
-  pull-requests: write
+
+on:
+  pull_request:
+    permissions:
+      checks: write
+      contents: read
+      pull-requests: write
+
 jobs:
   build_and_preview:
-        if: '${{ github.event.pull_request.head.repo.full_name == github.repository }}'
-        - name: Hugo setup
-          uses: peaceiris/actions-hugo@v2.6.0
-          with: 
-            hugo-version: 0.115.4
-            extended: true
-          env:
-            ACTIONS_ALLOW_UNSECURE_COMMANDS: 'true'
+    if: ${{ github.event.pull_request.head.repo.full_name == github.repository }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Hugo setup
+        uses: peaceiris/actions-hugo@v2.6.0
+        with:
+          hugo-version: 0.115.4
+          extended: true
+        env:
+          ACTIONS_ALLOW_UNSECURE_COMMANDS: 'true'
 
-        - name: Check out code into the Go module directory
-          uses: actions/checkout@v4
-          with:
-            submodules: true  # Fetch Hugo themes (true OR recursive)
-            fetch-depth: 0    # Fetch all history for .GitInfo and .Lastmod
+      - name: Check out code into the Go module directory
+        uses: actions/checkout@v4
+        with:
+          submodules: true  # Fetch Hugo themes (true OR recursive)
+          fetch-depth: 0    # Fetch all history for .GitInfo and .Lastmod
 
-        - name: Build with Hugo
-          env:
-            # For maximum backward compatibility with Hugo modules
-            HUGO_ENVIRONMENT: production
-            HUGO_ENV: production
-          run:  hugo -E -F --minify -d public
-   
-        - name: Deploy preview
-          uses: FirebaseExtended/action-hosting-deploy@v0
-          with:
-            repoToken: '${{ secrets.GITHUB_TOKEN }}'
-            firebaseServiceAccount: '${{ secrets.FIREBASE_SERVICE_ACCOUNT_BLOWFISH_TUTORIAL }}'
-            expires: 30d
-            channelId: preview-${{ github.event.number }}
-            projectId: blowfish-a2cdc
+      - name: Build with Hugo
+        env:
+          # For maximum backward compatibility with Hugo modules
+          HUGO_ENVIRONMENT: production
+          HUGO_ENV: production
+        run: hugo -E -F --minify -d public
+
+      - name: Deploy preview
+        uses: FirebaseExtended/action-hosting-deploy@v0
+        with:
+          repoToken: '${{ secrets.GITHUB_TOKEN }}'
+          firebaseServiceAccount: '${{ secrets.FIREBASE_SERVICE_ACCOUNT_BLOWFISH_TUTORIAL }}'
+          expires: 30d
+          channelId: preview-${{ github.event.number }}
+          projectId: blowfish-a2cdc
