@@ -28,8 +28,10 @@ jobs:
         with:
           submodules: true  # Fetch Hugo themes (true OR recursive)
           fetch-depth: 0    # Fetch all history for .GitInfo and .Lastmod
-      - name: firebase login
-        run: firebase login:ci
+
+      - name: Firebase login
+        run: echo "${{ secrets.FIREBASE_CI_TOKEN }}" | firebase login:ci
+
       - name: Build with Hugo
         env:
           # For maximum backward compatibility with Hugo modules
